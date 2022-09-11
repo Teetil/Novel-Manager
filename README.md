@@ -1,4 +1,4 @@
-# Romaani-sovellus
+# Novel Manager
 An app to manage your novels
 
 The app allows you to add novels to your library from a list of novels. A novel contains a title, description and tags. You can then review or comment on these novels. You can also set your library to public at which point other users will be able to browse your added novels and comment on them. Admins can also add new noves to the list. Novel names and sources could also be gotten from scraping the web, but probably not going to be added for now. Custom novels will also have a release frequency that tells how often the novels would get new chapters. And if you were following the novel you would be notified when a new chaper comes out. Possibly also a forum like section for discussion of novels.
