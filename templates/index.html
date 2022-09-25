@@ -1,7 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>FRONT PAGE</h2>
-
+<body>
+    <div class="topbar">
+        <a href="/add" class="nav-button">Add novel</a>
+        <div class="header">
+            Novel Manager
+        </div>
+        <a href="/delete" class="nav-button">Delete novel</a>
+    </div>
+    <div class="novel-container">
+        {% for novel in novels %}
+        <div class="novel"> 
+            <a href="/novel/{{novel.id}}">{{novel.name}}</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
 
 {%endblock%}
