@@ -36,6 +36,20 @@ body {
     margin-bottom: 2rem;
 }
 
+.submit-field{
+    background: aqua;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.add-form{
+    display: flex;
+    flex-direction: column;
+}
+
 .novel{
     font-size: 2rem;
     background-color: aqua;

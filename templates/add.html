@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<body>
+    <div class="topbar">
+        <div class="header"> Add new novels</div>
+    </div>
+    <div class="submit-field">
+        <form action="#", method="post" class="add-form">
+            <label for="novel-name">Title of Novel</label>
+            <input type="text", name="novel-name", minlength="1", maxlength="30">
+            <label for="author-name">Name of Author</label>
+            <input type="text", name="author-name", minlength="1", maxlength="30">
+            <label for="novel-synopsis">Short description of novel</label>
+            <input type="text", name="novel-synopsis", maxlength="30">
+            <input type="submit", value="Add">
+        </form>
+    </div>
+    <a href="/" class="nav-button">Back</a>
+</body>
+
+{% endblock %}
