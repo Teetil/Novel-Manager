@@ -1,18 +1,18 @@
 CREATE TABLE authors (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT UNIQUE
 );
 
 CREATE TABLE novels (
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    name TEXT UNIQUE,
     synopsis TEXT,
     author_id INTEGER REFERENCES authors
 );
 
 CREATE TABLE tags (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT UNIQUE
 );
 
 CREATE TABLE novel_tags (
