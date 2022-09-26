@@ -13,3 +13,12 @@ Features:
 7. Sending messages to other users or blocking them
 8. Admin rights such as deleting reviews and adding novels
 9. Threads for discusing novels?
+
+Current Progress:
+
+Ability to create, delete and browse novels.
+Novels are linked to authors which can also be browsed, seeing all teir published works
+Currently adding or deleting are not behind user rights.
+Tags not implemented.
+Reviews and users not implemented
+Following not implemented
