@@ -39,6 +39,3 @@ def author_page(author_id):
     author_info = authors.get_author_info(author_id)
     author_novels = [(n[1], n[2]) for n in author_info]
     return render_template("author.html", author_name = author_info[0][0].capitalize(), author_novels=author_novels)
-
-
-app.run(debug=True)
