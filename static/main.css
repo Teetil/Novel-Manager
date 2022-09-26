@@ -81,3 +81,11 @@ body {
     margin-top: 4rem;
     font-size: 3rem;
 }
+
+.delete-submit{
+    border: o none;
+    padding: .5rem;
+    border-radius: .5rem;
+    margin-top: 4rem;
+    background: aqua;
+}

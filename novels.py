@@ -13,3 +13,8 @@ def add_novel(name : str, author_id : int, synopsis : str) -> int:
 def get_novel_info(novel_id : int) -> list:
     sql = "SELECT n.name, n.synopsis, a.name, a.id FROM novels n, authors a WHERE n.id=:novel_id AND n.author_id=a.id"
     return db.session.execute(sql, {"novel_id" : novel_id}).fetchone()
+
+def remove_novel(novel_id : int):
+    sql = "DELETE FROM novels WHERE id=:novel_id"
+    db.session.execute(sql, {"novel_id" : novel_id})
+    db.session.commit()

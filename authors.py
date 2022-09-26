@@ -11,5 +11,5 @@ def add_new_author(name : str) -> int:
     return author_id
 
 def get_author_info(author_id : int) -> list:
-    sql = "SELECT a.name, n.name, n.id FROM novels n, authors a WHERE n.author_id = :author_id"
+    sql = """SELECT a.name, n.name, n.id FROM novels n JOIN authors a ON n.author_id=a.id WHERE a.id = :author_id"""
     return db.session.execute(sql, {"author_id" : author_id}).fetchall()

@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import render_template, request, redirect
 from setup import app, db
 import novels
@@ -25,10 +26,14 @@ def add_novel():
         novels.add_novel(novel_name, author_id, novel_synopsis)
         return redirect("/")
 
-@app.route("/novel/<int:novel_id>")
+@app.route("/novel/<int:novel_id>", methods=["GET", "POST"])
 def novel_page(novel_id):
-    novel_info = novels.get_novel_info(novel_id)
-    return render_template("novel.html", novel_name = novel_info[0], novel_synopsis = novel_info[1], author_name = novel_info[2].capitalize(), author_id = novel_info[3])
+    if request.method == "GET":
+        novel_info = novels.get_novel_info(novel_id)
+        return render_template("novel.html", novel_name = novel_info[0], novel_synopsis = novel_info[1], author_name = novel_info[2].capitalize(), author_id = novel_info[3])
+    if request.method == "POST":
+        novels.remove_novel(novel_id)
+        return redirect("/")
 
 @app.route("/author/<int:author_id>")
 def author_page(author_id):
