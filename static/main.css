@@ -42,7 +42,6 @@ body {
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
 }
 
 .add-form{
@@ -73,5 +72,12 @@ body {
     border-radius: 1rem;
     overflow-wrap: break-word;
     max-width: 30%;
-    margin-bottom: 4rem;
+}
+
+.back-button{
+    padding: .5rem;
+    border-radius: .5rem;
+    background: aqua;
+    margin-top: 4rem;
+    font-size: 3rem;
 }
