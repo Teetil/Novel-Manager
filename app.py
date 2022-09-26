@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import render_template, request, redirect
 from setup import app, db
 import novels
