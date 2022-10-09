@@ -4,6 +4,7 @@ import novels
 import authors
 import tags
 import users
+import reviews
 
 @app.route("/")
 def index():
@@ -42,7 +43,7 @@ def author_page(author_id):
     author_novels = [(n[1], n[2]) for n in author_info]
     return render_template("author.html", author_name = author_info[0][0].capitalize(), author_novels=author_novels)
 
-@app.route("/novel_tags/<int:novel_id>", methods=["GET", "POST"])
+@app.route("/novel/<int:novel_id>/tags", methods=["GET", "POST"])
 def novel_tag_page(novel_id):
     novel_info = novels.get_novel_info(novel_id)
     tag_info = tags.get_all_tags()
@@ -91,3 +92,12 @@ def register():
 def logout():
     users.logout()
     return redirect("/")
+
+@app.route("/novel/<int:novel_id>/reviews", methods=["GET", "POST"])
+def review(novel_id):
+    if request.method == "POST":
+        reviews.add_review(session["user_id"], novel_id, int(request.form["rating"]), request.form["add_review"])
+    return render_template("reviews.html", novel_info = novels.get_novel_info(novel_id), reviews = novels.get_novel_reviews(novel_id))
+
+
+app.run(debug=True)

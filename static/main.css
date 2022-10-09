@@ -9,6 +9,32 @@ body {
     flex-direction: column;
 }
 
+#review-body{
+    display: flex;
+    width: 100%;
+    margin-left: 5rem;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#review-container{
+    display: flex;
+    width: 100%;
+    margin-left: 5rem;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.review{
+    background-color: aqua;
+    font-size: 2rem;
+    border-radius: .5rem;
+    padding: .1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    width: 50%;
+}
+
 .topbar{
     display: flex;
     flex-direction: row;
