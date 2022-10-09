@@ -6,7 +6,10 @@ def get_all_novels():
 
 def add_novel(name : str, author_id : int, synopsis : str) -> int:
     sql = "INSERT INTO novels (name, synopsis, author_id) VALUES (:name, :synopsis, :author_id) RETURNING id"
-    novel_id = db.session.execute(sql, {"name" : name, "synopsis" : synopsis, "author_id" : author_id}).fetchone()[0]
+    try:
+        novel_id = db.session.execute(sql, {"name" : name, "synopsis" : synopsis, "author_id" : author_id}).fetchone()[0]
+    except:
+        return False
     db.session.commit()
     return novel_id
 

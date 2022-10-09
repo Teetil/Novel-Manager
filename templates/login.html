@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<body>
+    <div class="topbar">
+        <div class="header"> Sign in</div>
+    </div>
+    {% if session.user_id %}
+    <div class="nav.button">Already logged in</div>
+    <a href="/logout" class="nav-button"> Logout </a>
+    {% else %}
+    <div class="submit-field">
+    <form action="" method="post" class="add-form">
+        <label for="username">Username</label>
+        <input type="text" name="username" maxlength="20" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" maxlength="30" minlength="3" required>
+        <input type="submit" value="Login">
+    </form>
+    </div>
+    <a href="/register" class="back-button">Register</a>
+    {% endif %}
+    <a href="/" class="back-button">Back</a>
+</body>
+
+{% endblock %}

@@ -3,6 +3,11 @@
 
 <body>
     <div class="topbar">
+        {% if session["user_id"] %}
+        <a href="/logout" class="nav-button">Logout</a>
+        {% else %}
+        <a href="/login" class="nav-button">Login</a>
+        {% endif %}
         <div class="header">
             Novel Manager
         </div>

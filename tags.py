@@ -2,8 +2,11 @@ from setup import db
 
 def add_new_tag(name : str) -> int:
     sql = "INSERT INTO tags (name) VALUES (:name) RETURNING id"
-    tag_id = db.session.execute(sql, {"name" : name.lower()}).fetchone()[0]
-    db.session.commit()
+    try:
+        tag_id = db.session.execute(sql, {"name" : name.lower()}).fetchone()[0]
+        db.session.commit()
+    except:
+        return False
     return tag_id
 
 def remove_tag(tag_id : int):

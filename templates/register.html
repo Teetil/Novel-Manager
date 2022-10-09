@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<body>
+    <div class="topbar">
+        <div class="header">Register</div>
+    </div>
+    <div class="submit-field">
+    <form action="" method="post" class="add-form">
+        <label for="username">Username</label>
+        <input type="text" name="username" maxlength="20" minlength="3" required>
+        <label for="password">Password</label>
+        <input type="password" name="password1" maxlength="30" minlength="3" required>
+        <label for="password">Repeat password</label>
+        <input type="password" name="password2" maxlength="30" minlength="3" required>
+        <select name="role">
+            <option value=0>Basic</option>
+            <option value=1>Admin</option>
+        </select>
+        <input type="submit" value="Register">
+    </form>
+    </div>
+    <a href="/" class="back-button">Back</a>
+</body>
+
+{% endblock %}

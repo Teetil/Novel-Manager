@@ -6,8 +6,11 @@ def get_author_by_name(name : str) -> int:
 
 def add_new_author(name : str) -> int:
     sql = "INSERT INTO authors (name) VALUES (:name) RETURNING id"
-    author_id = db.session.execute(sql, {"name" : name.lower()}).fetchone()[0]
-    db.session.commit()
+    try:
+        author_id = db.session.execute(sql, {"name" : name.lower()}).fetchone()[0]
+        db.session.commit()
+    except:
+        return False
     return author_id
 
 def get_author_info(author_id : int) -> list:

@@ -1,9 +1,9 @@
-from crypt import methods
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session
 from setup import app, db
 import novels
 import authors
 import tags
+import users
 
 @app.route("/")
 def index():
@@ -63,3 +63,31 @@ def novel_tag_page(novel_id):
 @app.route("/tag/<int:tag_id>")
 def tag_page(tag_id):
     return render_template("tag.html", tag_name = tags.get_tag_by_id(tag_id), novels=novels.get_novels_by_tag(tag_id))
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        users.login(username, password)
+        return redirect("/")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "GET":
+        return render_template("register.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password1"]
+        role = request.form["role"]
+        if password != request.form["password2"]:
+            return redirect("/")
+        users.add_user(username, password, role)
+        return redirect("/")
+
+@app.route("/logout")
+def logout():
+    users.logout()
+    return redirect("/")

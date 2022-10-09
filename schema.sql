@@ -22,8 +22,8 @@ CREATE TABLE novel_tags (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name TEXT,
-    password INTEGER,
+    name TEXT UNIQUE,
+    password TEXT,
     role INTEGER
 );
 
