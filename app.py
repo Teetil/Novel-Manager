@@ -99,5 +99,6 @@ def review(novel_id):
         reviews.add_review(session["user_id"], novel_id, int(request.form["rating"]), request.form["add_review"])
     return render_template("reviews.html", novel_info = novels.get_novel_info(novel_id), reviews = novels.get_novel_reviews(novel_id))
 
-
-app.run(debug=True)
+@app.route("/user/<user_id>")
+def user_page(user_id):
+    return render_template("user.html", user_info=users.get_user_info(user_id), reviews = reviews.get_reviews_by_user(user_id))

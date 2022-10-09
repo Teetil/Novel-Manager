@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<body>
+    <div class="topbar">
+        <div class="header"> {{user_info.name.capitalize()}}</div>
+    </div>
+    <div class="nav-button">User reviews</div>
+    <div id="review-container">
+    {% for review in reviews%}
+    <div class="review">
+        <a href="/novel/{{review.id}}" style="font-size: 3rem;">{{review.name.capitalize()}} - {{review.rating}} Starts </a>
+        <p>{{review.content}}</p>
+    </div>
+    {% endfor  %}
+    </div>
+    <a href="/" class="back-button">Back</a>
+</body>
+
+{% endblock %}

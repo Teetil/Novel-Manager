@@ -10,4 +10,5 @@ if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = uri
+app.secret_key = getenv("SECRET_KEY")
 db = SQLAlchemy(app)

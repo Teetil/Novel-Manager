@@ -31,3 +31,7 @@ def logout():
     del session["user_id"]
     del session["user_name"]
     del session["user_role"]
+
+def get_user_info(user_id : int) -> list:
+    sql = "SELECT id, name FROM users WHERE id=:user_id"
+    return db.session.execute(sql, {"user_id" : user_id}).fetchone()
