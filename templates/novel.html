@@ -3,13 +3,20 @@
 
 <body>
     <div class="topbar">
-        <div class="header"> {{novel_name}}</div>
+        <div class="header"> {{novel_info[0]}}</div>
     </div>
-    <a href="/author/{{author_id}}" class="author">{{author_name}}</a>
-    <div class="synopsis">{{novel_synopsis}}</div>
+    <a href="/author/{{novel_info[3]}}" class="author">{{novel_info[2].capitalize()}}</a>
+    <div class="synopsis">{{novel_info[1]}}</div>
     <form action="#" method="post">
         <input type="submit" value="Delete" class="delete-submit">
     </form>
+    <div class="nav-button">Tags</div>
+    <div>
+    {% for tag in tags%}
+    <div class="novel">{{tag.name.capitalize()}}</div>
+    {% endfor %}
+    </div>
+    <a href="/novel_tags/{{novel_id}}" class="back-button">Manage tags</a>
     <a href="/" class="back-button">Back</a>
 </body>
 

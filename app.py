@@ -1,7 +1,9 @@
+from crypt import methods
 from flask import render_template, request, redirect
 from setup import app, db
 import novels
 import authors
+import tags
 
 @app.route("/")
 def index():
@@ -29,7 +31,7 @@ def add_novel():
 def novel_page(novel_id):
     if request.method == "GET":
         novel_info = novels.get_novel_info(novel_id)
-        return render_template("novel.html", novel_name = novel_info[0], novel_synopsis = novel_info[1], author_name = novel_info[2].capitalize(), author_id = novel_info[3])
+        return render_template("novel.html", novel_info=novel_info, novel_id=novel_id, tags=tags.get_all_tags())
     if request.method == "POST":
         novels.remove_novel(novel_id)
         return redirect("/")
@@ -39,3 +41,21 @@ def author_page(author_id):
     author_info = authors.get_author_info(author_id)
     author_novels = [(n[1], n[2]) for n in author_info]
     return render_template("author.html", author_name = author_info[0][0].capitalize(), author_novels=author_novels)
+
+@app.route("/novel_tags/<int:novel_id>", methods=["GET", "POST"])
+def novel_tag_page(novel_id):
+    novel_info = novels.get_novel_info(novel_id)
+    tag_info = tags.get_all_tags()
+    if request.method == "GET":
+        return render_template("novel_tags.html", tags=tag_info, novel_name = novel_info[0])
+    if request.method == "POST":
+        if "create_tag" in request.form:
+            tags.add_new_tag(request.form["create_tag"])
+            return render_template("novel_tags.html", tags=tag_info, novel_name = novel_info[0])
+        elif "add_novel_tag" in request.form:
+            for tup in tag_info:
+                if request.form["add_novel_tag"].lower() in tup:
+                    novel_tags = [i[0] for i in novels.get_novel_tags(novel_id)]
+                    if tup[0] not in novel_tags:
+                        tags.add_novel_tag(novel_id, tup[0])
+            return redirect(f"/novel/{novel_id}")
