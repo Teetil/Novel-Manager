@@ -13,7 +13,7 @@
     <div class="nav-button">Tags</div>
     <div>
     {% for tag in tags%}
-    <div class="novel">{{tag.name.capitalize()}}</div>
+    <a href="/tag/{{tag.id}}" class="novel">{{tag.name.capitalize()}}</a>
     {% endfor %}
     </div>
     <a href="/novel_tags/{{novel_id}}" class="back-button">Manage tags</a>

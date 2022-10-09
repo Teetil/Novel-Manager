@@ -15,8 +15,12 @@ def get_novel_info(novel_id : int) -> list:
     return db.session.execute(sql, {"novel_id" : novel_id}).fetchone()
 
 def get_novel_tags(novel_id : int) -> list:
-    sql = "SELECT tag_id FROM novel_tags WHERE novel_id=:novel_id"
+    sql = "SELECT t.id, t.name FROM novel_tags nt, tags t WHERE nt.novel_id=:novel_id AND t.id=nt.tag_id"
     return db.session.execute(sql, {"novel_id" : novel_id}).fetchall()
+
+def get_novels_by_tag(tag_id : int) -> list:
+    sql = "SELECT n.id, n.name FROM novel_tags nt, novels n WHERE nt.tag_id=:tag_id AND n.id=nt.novel_id"
+    return db.session.execute(sql, {"tag_id" : tag_id}).fetchall()
 
 def remove_novel(novel_id : int):
     sql = "DELETE FROM novels WHERE id=:novel_id"

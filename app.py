@@ -31,7 +31,7 @@ def add_novel():
 def novel_page(novel_id):
     if request.method == "GET":
         novel_info = novels.get_novel_info(novel_id)
-        return render_template("novel.html", novel_info=novel_info, novel_id=novel_id, tags=tags.get_all_tags())
+        return render_template("novel.html", novel_info=novel_info, novel_id=novel_id, tags=novels.get_novel_tags(novel_id))
     if request.method == "POST":
         novels.remove_novel(novel_id)
         return redirect("/")
@@ -59,3 +59,7 @@ def novel_tag_page(novel_id):
                     if tup[0] not in novel_tags:
                         tags.add_novel_tag(novel_id, tup[0])
             return redirect(f"/novel/{novel_id}")
+
+@app.route("/tag/<int:tag_id>")
+def tag_page(tag_id):
+    return render_template("tag.html", tag_name = tags.get_tag_by_id(tag_id), novels=novels.get_novels_by_tag(tag_id))

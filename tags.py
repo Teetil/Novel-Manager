@@ -19,3 +19,7 @@ def add_novel_tag(novel_id : int, tag_id : int):
     sql = "INSERT INTO novel_tags (novel_id, tag_id) VALUES (:novel_id, :tag_id)"
     db.session.execute(sql, {"novel_id" : novel_id, "tag_id" : tag_id})
     db.session.commit()
+
+def get_tag_by_id(tag_id : int) -> str:
+    sql = "SELECT name FROM tags WHERE id=:tag_id"
+    return db.session.execute(sql, {"tag_id" : tag_id}).fetchone()[0]

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<body>
+    <div class="topbar">
+        <div class="header"> {{tag_name.capitalize()}}</div>
+    </div>
+    <div class="novel-container">
+        {% for novel in novels %}
+        <div class="novel"> 
+            <a href="/novel/{{novel.id}}">{{novel.name}}</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+{% endblock %}
