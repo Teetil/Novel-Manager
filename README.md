@@ -19,8 +19,20 @@ Features:
 Current Progress:
 
 Ability to create, delete and browse novels.
+
 Novels are linked to authors which can also be browsed, seeing all teir published works
+
 Currently adding or deleting are not behind user rights.
-Tags not implemented.
-Reviews and users not implemented
-Following not implemented
+
+Tags are implemented and you can see a novels tags, add new tags or see all novels under a certain tag
+
+Users are implemented.
+
+Reviews are implemented
+
+TODO
+1. User roles
+2. Following
+3. Private messages
+4. Error handling
+5. General bugfixes and refactoring
