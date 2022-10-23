@@ -12,7 +12,8 @@
     <form action="#" method="post">
         <input type="submit" value="Delete" class="delete-submit">
         <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
-    </form>
+        <input type="hidden" name="delete">
+        </form>
     {% endif %}
     <div class="nav-button">Tags</div>
     <div class="novel-container">

@@ -48,7 +48,7 @@ def novel_page(novel_id):
             followers.remove_follower(session["user_id"], novel_id)
         elif "add_chp" in request.form:
             novels.add_chapters(novel_id, int(request.form["add_chp"]))
-        else:
+        elif "delete" in request.form:
             users.check_role(1)
             novels.remove_novel(novel_id)
         return redirect("/")
