@@ -2,10 +2,20 @@
 {% block content %}
 
 <body>
-    <div class="topbar">
+    <div class="topbar" style="flex-direction: column;">
         <div class="header"> {{user_info.name.capitalize()}}</div>
+        <a href="/logout" class="nav-button">Logout</a>
     </div>
-    <div class="nav-button">User reviews</div>
+    <div class="nav-button">Following:</div>
+    <div class="novel-container">
+        {% for novel in following %}
+        <div class="novel"> 
+            <a href="/novel/{{novel[1]}}">{{novel[0].capitalize()}} - {{novel[2]}} New</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="nav-button">Novel Reviews</div>
     <div id="review-container">
     {% for review in reviews%}
     <div class="review">

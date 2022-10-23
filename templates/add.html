@@ -13,7 +13,7 @@
             <label for="author-name">Name of Author</label>
             <input type="text", name="author-name", minlength="1", maxlength="30" required>
             <label for="novel-synopsis">Short description of novel</label>
-            <input type="text", name="novel-synopsis", maxlength="500">
+            <input type="text", name="novel-synopsis", minlength="1" maxlength="500" required>
             <input type="submit", value="Add">
             <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
         </form>

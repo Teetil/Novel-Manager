@@ -17,8 +17,8 @@ def get_novel_followers(novel_id : int) -> list:
     return db.session.execute(sql, {"novel_id" : novel_id}).fetchall()
 
 def get_user_following(user_id : int) -> list:
-    sql = "SELECT novel_id, last_update_cnt FROM followers WHERE user_id=:user_id"
-    return db.session.execute(sql, {"user_id" : user_id})
+    sql = "SELECT n.name, n.id, n.chapter_cnt - f.last_update_cnt FROM followers f, novels n WHERE f.user_id=:user_id AND n.id=f.novel_id"
+    return db.session.execute(sql, {"user_id" : user_id}).fetchall()
 
 def update_follow_chapter(user_id : int, novel_id : int, chp_cnt : int):
     sql = "UPDATE followers SET last_update_cnt = :chp_cnt WHERE user_id=:user_id AND novel_id=:novel_id"
