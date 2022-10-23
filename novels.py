@@ -5,7 +5,7 @@ def get_all_novels():
     return db.session.execute(sql).fetchall()
 
 def add_novel(name : str, author_id : int, synopsis : str) -> int:
-    sql = "INSERT INTO novels (name, synopsis, author_id) VALUES (:name, :synopsis, :author_id) RETURNING id"
+    sql = "INSERT INTO novels (name, synopsis, author_id, chapter_cnt) VALUES (:name, :synopsis, :author_id, 0) RETURNING id"
     try:
         novel_id = db.session.execute(sql, {"name" : name, "synopsis" : synopsis, "author_id" : author_id}).fetchone()[0]
     except:
@@ -33,3 +33,12 @@ def remove_novel(novel_id : int):
     sql = "DELETE FROM novels WHERE id=:novel_id"
     db.session.execute(sql, {"novel_id" : novel_id})
     db.session.commit()
+
+def add_chapters(novel_id : int, cnt : int):
+    sql = "UPDATE novels SET chapter_cnt = chapter_cnt +:cnt WHERE id=:novel_id"
+    db.session.execute(sql, {"novel_id" : novel_id, "cnt" : cnt})
+    db.session.commit()
+
+def get_chapters(novel_id : int) -> int:
+    sql = " SELECT chapter_cnt FROM novels WHERE id=:novel_id"
+    return db.session.execute(sql, {"novel_id" : novel_id}).fetchone()[0]

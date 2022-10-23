@@ -7,7 +7,8 @@ CREATE TABLE novels (
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE,
     synopsis TEXT,
-    author_id INTEGER REFERENCES authors
+    author_id INTEGER REFERENCES authors,
+    chapter_cnt INTEGER
 );
 
 CREATE TABLE tags (
@@ -40,14 +41,6 @@ CREATE TABLE review (
 
 CREATE TABLE followers (
     user_id INTEGER REFERENCES users ON DELETE CASCADE,
-    novel_id INTEGER REFERENCES novels ON DELETE CASCADE
-);
-
-
-
-CREATE TABLE messages (
-    id SERIAL PRIMARY KEY,
-    sender_id INTEGER REFERENCES users,
-    receiver_id INTEGER REFERENCES users,
-    name TEXT
+    novel_id INTEGER REFERENCES novels ON DELETE CASCADE,
+    last_update_cnt INTEGER
 );

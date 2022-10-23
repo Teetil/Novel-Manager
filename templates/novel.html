@@ -2,10 +2,11 @@
 {% block content %}
 
 <body>
-    <div class="topbar">
-        <div class="header"> {{novel_info[0]}}</div>
+    <div class="topbar" style="flex-direction:column ;">
+        <div class="header"> {{novel_info[0].capitalize()}}</div>
+        <div class="nav-button" style="font-size: 2rem ;"> {{chapters}} Chapter(s)</div>
     </div>
-    <a href="/author/{{novel_info[3]}}" class="author">{{novel_info[2].capitalize()}}</a>
+    <a href="/author/{{novel_info[3]}}" class="author">Author: {{novel_info[2].capitalize()}}</a>
     <div class="synopsis">{{novel_info[1]}}</div>
     {% if session["user_id"] and session["user_role"] > 0%}
     <form action="#" method="post">
@@ -16,11 +17,31 @@
     <div class="nav-button">Tags</div>
     <div class="novel-container">
     {% for tag in tags%}
-    <a href="/tag/{{tag.id}}" class="novel">{{tag.name.capitalize()}}</a>
+    <a href="/tag/{{tag.id}}" class="novel" >{{tag.name.capitalize()}}</a>
     {% endfor %}
     </div>
     {% if session["user_id"] %}
-    <a href="/novel/{{novel_id}}/tags" class="back-button">Manage tags</a>
+        <a href="/novel/{{novel_id}}/tags" class="back-button" style="margin-bottom: 3rem;">Manage tags</a>
+        {% if session["user_role"] > 0 %}
+            <form action="" method="post">
+            <input type="number" name="add_chp" min="0">
+            <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+            <input type="submit" value="Add chapters">
+            </form>
+        {% endif %}
+        {% if session["user_id"] not in followers%}
+            <form action="" method="post">
+                <input type="submit" value="Follow" class="delete-submit">
+                <input type="hidden" name="follow">
+                <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+            </form>
+            {% else %}
+            <form action="" method="post">
+                <input type="submit" value="Unfollow" class="delete-submit">
+                <input type="hidden" name="unfollow">
+                <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+            </form>
+        {% endif %}
     {% else %}
     <div class="nav-button">You must be logged in to manage tags</div>
     {% endif %}

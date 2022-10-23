@@ -16,6 +16,12 @@ def add_user(name : str, password : str, role=0) -> int:
         return False
     return login(name, password)
 
+def delete_user(user_id : int):
+    sql = "DELETE FROM users WHERE id=:uesr_id"
+    db.session.execute(sql, {"user_id" : user_id})
+    db.session.commit()
+    return True
+
 def login(name : str, password : str) -> bool:
     sql = "SELECT id, name, password, role FROM users WHERE name=:name"
     user = db.session.execute(sql, {"name" : name}).fetchone()

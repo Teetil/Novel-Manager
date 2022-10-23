@@ -5,6 +5,7 @@ import authors
 import tags
 import users
 import reviews
+import followers
 
 @app.route("/")
 def index():
@@ -33,13 +34,23 @@ def add_novel():
 
 @app.route("/novel/<int:novel_id>", methods=["GET", "POST"])
 def novel_page(novel_id):
+    novel_info = novels.get_novel_info(novel_id)
+    novel_followers = [n[0] for n in followers.get_novel_followers(novel_id)]
     if request.method == "GET":
-        novel_info = novels.get_novel_info(novel_id)
-        return render_template("novel.html", novel_info=novel_info, novel_id=novel_id, tags=novels.get_novel_tags(novel_id))
+        if "user_id" in session:
+            followers.update_follow_chapter(session["user_id"], novel_id, novels.get_chapters(novel_id))
+        return render_template("novel.html", novel_info=novel_info, novel_id=novel_id, tags=novels.get_novel_tags(novel_id), followers=novel_followers, chapters = novels.get_chapters(novel_id))
     if request.method == "POST":
         users.check_csrf()
-        users.check_role(1)
-        novels.remove_novel(novel_id)
+        if "follow" in request.form:
+            followers.add_follower(session["user_id"], novel_id)
+        elif "unfollow" in request.form:
+            followers.remove_follower(session["user_id"], novel_id)
+        elif "add_chp" in request.form:
+            novels.add_chapters(novel_id, int(request.form["add_chp"]))
+        else:
+            users.check_role(1)
+            novels.remove_novel(novel_id)
         return redirect("/")
 
 @app.route("/author/<int:author_id>")
@@ -117,4 +128,6 @@ def review(novel_id):
 
 @app.route("/user/<user_id>")
 def user_page(user_id):
-    return render_template("user.html", user_info=users.get_user_info(user_id), reviews = reviews.get_reviews_by_user(user_id))
+    user_info = users.get_user_info(user_id)
+    user_following = followers.get_user_following(user_id)
+    return render_template("user.html", user_info=user_info, reviews = reviews.get_reviews_by_user(user_id), following = user_following)

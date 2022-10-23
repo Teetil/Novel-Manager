@@ -9,7 +9,7 @@
     <div id="review-container">
     {% for review in reviews%}
     <div class="review">
-        <a href="/novel/{{review.id}}" style="font-size: 3rem;">{{review.name.capitalize()}} - {{review.rating}} Starts </a>
+        <a href="/novel/{{review.id}}" style="font-size: 3rem;">{{review.name.capitalize()}} - {{review.rating}} Stars </a>
         <p>{{review.content}}</p>
     </div>
     {% endfor  %}
