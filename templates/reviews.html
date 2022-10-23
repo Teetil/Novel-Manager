@@ -31,7 +31,12 @@
     <div id="review-container">
     {% for review in reviews%}
     <div class="review">
-        <a href="/user/{{review.id}}" style="font-size: 3rem;">{{review.name.capitalize()}} - {{review.rating}} Stars </a>
+        <a href="/user/{{review[4]}}" style="font-size: 3rem;">{{review.name.capitalize()}} - {{review.rating}} Stars </a>
+        <form action="" method="post">
+            <input type="submit" value="Delete" class="delete-submit" style="margin:0 0 0 0; background-color: red;">
+            <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+            <input type="hidden" name="delete" value="{{review[5]}}">
+        </form>
         <p>{{review.content}}</p>
     </div>
     {% endfor  %}

@@ -26,7 +26,7 @@ def get_novels_by_tag(tag_id : int) -> list:
     return db.session.execute(sql, {"tag_id" : tag_id}).fetchall()
 
 def get_novel_reviews(novel_id : int):
-    sql = "SELECT u.name, r.rating, r.content, r.created_at, u.id FROM review r, users u WHERE r.novel_id=:novel_id AND u.id=r.creator_id"
+    sql = "SELECT u.name, r.rating, r.content, r.created_at, u.id, r.id FROM review r, users u WHERE r.novel_id=:novel_id AND u.id=r.creator_id"
     return db.session.execute(sql, {"novel_id" : novel_id})
 
 def remove_novel(novel_id : int):

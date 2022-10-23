@@ -123,7 +123,12 @@ def logout():
 def review(novel_id):
     if request.method == "POST":
         users.check_csrf()
-        reviews.add_review(session["user_id"], novel_id, int(request.form["rating"]), request.form["add_review"])
+        if "rating" in request.form:
+            reviews.add_review(session["user_id"], novel_id, int(request.form["rating"]), request.form["add_review"])
+        elif "delete" in request.form:
+            users.check_role(1)
+            reviews.delete_review(request.form["delete"])
+            print(request.form)
     return render_template("reviews.html", novel_info = novels.get_novel_info(novel_id), reviews = novels.get_novel_reviews(novel_id))
 
 @app.route("/user/<user_id>")

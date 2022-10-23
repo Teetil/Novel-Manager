@@ -5,6 +5,11 @@
     <div class="topbar">
         <div class="header"> {{novel_name}}</div>
     </div>
+    {% if not session["user_id"] %}
+    <div class="nav-button">
+        You must be logged in to manage tags
+    </div>
+    {% else %}
     <div class="nav-button">
         Click tag to add
     </div>
@@ -14,6 +19,7 @@
         {% endfor %}
         <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
     </form>
+    {% if session["user_role"] > 0 %}
     <div class="submit-field">
         <form action="" method="post" class="add-form">
             <label for=""></label>
@@ -22,6 +28,8 @@
             <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
         </form>
     </div>
+    {% endif %}
+    {% endif %}
     <a href="/" class="back-button">Back</a>
 </body>
 
