@@ -1,3 +1,14 @@
 {% extends "layout.html" %}
+{% block content %}
 
-<h1 style="color: red;">ERROR</h1>
+<body>
+    <div class="topbar">
+        <div class="header">
+            Novel Manager
+        </div>
+    </div>
+    <p class="review" style="background-color:red ;">{{ error }}</p>
+    <a href="/" class="back-button">Back</a>
+</body>
+
+{%endblock%}

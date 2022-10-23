@@ -12,12 +12,14 @@
         {% for tag in tags %}
         <input type="submit" name="add_novel_tag" value="{{tag.name.capitalize()}}">
         {% endfor %}
+        <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
     </form>
     <div class="submit-field">
         <form action="" method="post" class="add-form">
             <label for=""></label>
             <input type="text" name="create_tag" minlength="1", maxlength="20" required>
             <input type="submit" value="Create new tag">
+            <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
         </form>
     </div>
     <a href="/" class="back-button">Back</a>

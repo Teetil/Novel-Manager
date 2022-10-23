@@ -1,6 +1,7 @@
 from setup import db
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import session
+from flask import session, abort, request
+from os import urandom
 
 def get_all_users() -> list:
     sql = "SELECT id, name, role FROM users ORDER BY name"
@@ -25,6 +26,7 @@ def login(name : str, password : str) -> bool:
     session["user_id"] = user[0]
     session["user_name"] = user[1]
     session["user_role"] = user[3]
+    session["csrf_token"] = urandom(16).hex()
     return True
 
 def logout():
@@ -35,3 +37,11 @@ def logout():
 def get_user_info(user_id : int) -> list:
     sql = "SELECT id, name FROM users WHERE id=:user_id"
     return db.session.execute(sql, {"user_id" : user_id}).fetchone()
+
+def check_csrf():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
+def check_role(role):
+    if session["user_role"] < role:
+        abort(403)

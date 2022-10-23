@@ -93,6 +93,7 @@ body {
 
 .synopsis{
     margin-top: 4rem;
+    margin-bottom: 4rem;
     font-size: 1rem;
     background-color: aqua;
     padding: 1rem;
@@ -115,4 +116,8 @@ body {
     border-radius: .5rem;
     margin-top: 4rem;
     background: aqua;
+}
+
+.novel-container{
+    margin-bottom: 2rem;
 }

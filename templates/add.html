@@ -5,6 +5,7 @@
     <div class="topbar">
         <div class="header"> Add new novels</div>
     </div>
+    {% if session["user_id"] %}
     <div class="submit-field">
         <form action="#", method="post" class="add-form">
             <label for="novel-name">Title of Novel</label>
@@ -14,8 +15,12 @@
             <label for="novel-synopsis">Short description of novel</label>
             <input type="text", name="novel-synopsis", maxlength="500">
             <input type="submit", value="Add">
+            <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
         </form>
     </div>
+    {% else %}
+    <div class="nav-button">You must be logged in to add novels</div>
+    {% endif %}
     <a href="/" class="back-button">Back</a>
 </body>
 

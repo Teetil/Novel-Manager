@@ -7,16 +7,23 @@
     </div>
     <a href="/author/{{novel_info[3]}}" class="author">{{novel_info[2].capitalize()}}</a>
     <div class="synopsis">{{novel_info[1]}}</div>
+    {% if session["user_id"] and session["user_role"] > 0%}
     <form action="#" method="post">
         <input type="submit" value="Delete" class="delete-submit">
+        <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
     </form>
+    {% endif %}
     <div class="nav-button">Tags</div>
-    <div>
+    <div class="novel-container">
     {% for tag in tags%}
     <a href="/tag/{{tag.id}}" class="novel">{{tag.name.capitalize()}}</a>
     {% endfor %}
     </div>
+    {% if session["user_id"] %}
     <a href="/novel/{{novel_id}}/tags" class="back-button">Manage tags</a>
+    {% else %}
+    <div class="nav-button">You must be logged in to manage tags</div>
+    {% endif %}
     <a href="/novel/{{novel_id}}/reviews" class="back-button">Reviews</a>
     <a href="/" class="back-button">Back</a>
 </body>

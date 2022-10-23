@@ -16,6 +16,7 @@ def add_novel():
         return render_template("add.html")
     
     if request.method == "POST":
+        users.check_csrf()
         novel_name = request.form["novel-name"]
         author_name = request.form["author-name"]
         novel_synopsis = request.form["novel-synopsis"]
@@ -25,7 +26,9 @@ def add_novel():
             author_id = author_id
         else:
             author_id = author_id[0]
-        novels.add_novel(novel_name, author_id, novel_synopsis)
+        res = novels.add_novel(novel_name, author_id, novel_synopsis)
+        if not res:
+            return render_template("error.html", error="A novel with this name already exists")
         return redirect("/")
 
 @app.route("/novel/<int:novel_id>", methods=["GET", "POST"])
@@ -34,6 +37,8 @@ def novel_page(novel_id):
         novel_info = novels.get_novel_info(novel_id)
         return render_template("novel.html", novel_info=novel_info, novel_id=novel_id, tags=novels.get_novel_tags(novel_id))
     if request.method == "POST":
+        users.check_csrf()
+        users.check_role(1)
         novels.remove_novel(novel_id)
         return redirect("/")
 
@@ -50,8 +55,12 @@ def novel_tag_page(novel_id):
     if request.method == "GET":
         return render_template("novel_tags.html", tags=tag_info, novel_name = novel_info[0])
     if request.method == "POST":
+        users.check_csrf()
         if "create_tag" in request.form:
-            tags.add_new_tag(request.form["create_tag"])
+            users.check_role(1)
+            res = tags.add_new_tag(request.form["create_tag"])
+            if not res:
+                return render_template("error.html", error="This tag already exists")
             return render_template("novel_tags.html", tags=tag_info, novel_name = novel_info[0])
         elif "add_novel_tag" in request.form:
             for tup in tag_info:
@@ -72,7 +81,9 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        users.login(username, password)
+        res = users.login(username, password)
+        if not res:
+            return render_template("error.html", error="Incorrect username or password")
         return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
@@ -84,18 +95,23 @@ def register():
         password = request.form["password1"]
         role = request.form["role"]
         if password != request.form["password2"]:
-            return redirect("/")
-        users.add_user(username, password, role)
+            return render_template("error.html", error="Passwords do not match")
+        res = users.add_user(username, password, role)
+        if not res:
+            return render_template("error.html", error="This user already exists")
         return redirect("/")
 
 @app.route("/logout")
 def logout():
+    if "user_id" not in session:
+        return render_template("error.html", error="Not logged in")
     users.logout()
     return redirect("/")
 
 @app.route("/novel/<int:novel_id>/reviews", methods=["GET", "POST"])
 def review(novel_id):
     if request.method == "POST":
+        users.check_csrf()
         reviews.add_review(session["user_id"], novel_id, int(request.form["rating"]), request.form["add_review"])
     return render_template("reviews.html", novel_info = novels.get_novel_info(novel_id), reviews = novels.get_novel_reviews(novel_id))
 
